@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block main %}
-<h1>All Goods:</h1>
+<h1>{{product.name}}</h1>
 <div>
-    <h3>{{product.name}}</h3><br>
-    <p>{{product.price}}</p><br>
-    <p>{{product.about}}</p><br>
-    
-    <a href="{% url 'buy' product.pk %}">Купить</a>
-    
+    <p>{{product.about}}</p><br>    
+    <img src='{{ product.image.url }}'> 
+    <p>{{product.price}} руб</p><br>
 </div>
+<a href="{% url 'buy' product.pk %}">Купить</a>
 {%endblock%}

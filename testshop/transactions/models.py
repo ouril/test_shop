@@ -2,6 +2,7 @@ from django.db import models
 from testshop.models import BaseModel
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 
 class UserBalance(BaseModel):
@@ -16,7 +17,7 @@ class UserBalance(BaseModel):
         verbose_name='user_balance')
 
     def __str__(self):
-        return "Баланс " + self.user.name
+        return "Баланс " + str(self.user)
 
 
 class UserBalanceChange(models.Model):
@@ -37,4 +38,5 @@ class UserBalanceChange(models.Model):
         )
 
     def __str__(self):
-        return "Списание со счета " + self.user.name + " " + datatimes
+        return ("Списание со счета " + self.user.username  + " " 
+                    + str(self.datetime.date()) + str(self.datetime.time()))

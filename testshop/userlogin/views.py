@@ -1,13 +1,16 @@
 from django.contrib import auth
-from django.shortcuts import render, HttpResponseRedirect, render_to_response
+from django.shortcuts import (
+    render, 
+    HttpResponseRedirect
+)
 from django.http import Http404
 
 # Create your views here.
-def login(request):
+def login_form(request):
     return render(request, 'login.html')
 
 
-def loged(request):
+def login(request):
     if request.method == 'POST':
         username = request.POST.get('login')
         password = request.POST.get('password')

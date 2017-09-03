@@ -1,35 +1,67 @@
 from django.shortcuts import render
 from django.db import transaction
-from .models import UserBalance, UserBalanceChange
-from shop.models import Product
-
-# open a transaction
-#@transaction.atomic
-def buy(request, pk):
-    print(pk)
-    product = Product.objects.get(pk=pk)
-    user = request.user.id
-    print(user)
-    new_change = UserBalance.objects.get(
-            pk=user
+from django.shortcuts import render
+from .models import (
+    UserBalance, 
+    UserBalanceChange
+)
+from shop.models import (
+    Product, 
+    Store,
+    Order
     )
-    print(product)
-    print(new_change)
 
 
-    
-#  a.save()
-    # transaction now contains a.save()
+def buy(request, pk):
+    """
+    Function for making order and balance changes
+    Use transactions
 
-   # sid = transaction.savepoint()  
+    """
 
-   # b.save()
-    # transaction now contains a.save() and b.save()
+    store = Store.objects.get(id=pk)
+    price = store.product.price
+    print(store.number)
+    if store.number < 0:
+        return render(request, 'response.html', 
+    {
+        'message':"Товара нет на складе"
+        })
+    store.number = store.number - 1
+    user = request.user
+    new_change = UserBalance.objects.get(pk=user.id)    
+    balance = new_change.balance
+    if balance < price:
+        return render(request, 'response.html', 
+    {
+        'message':"Недостаточно средств"                     
+        })
+    else:
+        new_change.balance = balance - price
+        balance_change = UserBalanceChange(
+                user=user,
+                amount=price,
+                reason="Заказ " + str(store.product.name)
+            )
+        order = Order(
+                user=user,
+                product=store.product,
+                number=1
+            )
+        try:
+            with transaction.atomic():
+                order.save()
+                new_change.save()
+                store.save()
+                balance_change.save()
+        except:
+            return render(request, 'response.html', 
+    {
+        'message':"Произошла ошибка! Транзакция не выполнена"                     
+        })
 
-  #  if want_to_keep_b:
-  #      transaction.savepoint_commit(sid)
-        # open transaction still contains a.save() and b.save()
-  #  else:
-  #      transaction.savepoint_rollback(sid)
-        # open transaction now contains only a.save()
-# Create your views here.
+        return render(request, 'response.html', 
+    {
+        'message':"Покупка совершена успешно",
+        })
+

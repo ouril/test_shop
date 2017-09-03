@@ -6,7 +6,7 @@
 {% if errors %}
     <p class='errors'>Неправильный пароль или логина</p>
     {% endif %}
-    <form action="{% url 'loged' %}"  method='POST'>
+    <form action="{% url 'login' %}"  method='POST'>
       {% csrf_token %}
       <input max='35' name='login' placeholder='login' type='text' value=''>
       <input max='35' name='password' placeholder='password' type='password' value=''>
