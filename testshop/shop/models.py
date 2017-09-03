@@ -1,6 +1,6 @@
 from testshop.models import BaseModel
-from db.models import models
-from testshop imort settings
+from django.db import models
+from testshop import settings
 import uuid
 # Create your models here.
 
@@ -28,7 +28,7 @@ class Product(BaseModel):
         default=0.00,
         verbose_name='Price')
     image = models.ImageField(
-        upload=make_upload_path,
+        upload_to=make_upload_path,
         default='',
         blank=True
     )
@@ -36,3 +36,6 @@ class Product(BaseModel):
     def __str__(self):
         return self.name
 
+class Store(BaseModel):
+    product = models.ForeignKey('Product')
+    number = models.PositiveIntegerField(default=0)
