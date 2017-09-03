@@ -1,4 +1,6 @@
 from django.contrib import auth
+from django.http import Http404
+from .forms import RegForm
 from django.shortcuts import (
     render, 
     HttpResponseRedirect
@@ -30,3 +32,13 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect('/products')
+
+
+def registration(request):
+    if request.method == 'POST':
+        form = RegForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/products')
+        return render(request, 'registration.html', {'form': form})
+    return render(request, 'registration.html', {'form': RegForm()})

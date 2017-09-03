@@ -19,7 +19,8 @@ def make_upload_path(instance, filename, prefix=False):
 class Product(BaseModel):
     name = models.CharField(
         max_length=191, 
-        verbose_name='Product'
+        verbose_name='Product',
+        unque=True
         )
     about = models.TextField() 
     price = models.DecimalField(
@@ -33,7 +34,7 @@ class Product(BaseModel):
         default='',
         blank=True
     )
-    
+
     def __str__(self):
         return self.name
 
@@ -42,7 +43,7 @@ class Store(BaseModel):
     number = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return str(self.product) + 'on store'
+        return str(self.product) + 'on store' + str(self.number)
 
 class Order(BaseModel):
     user = models.ForeignKey(User, default=None)
