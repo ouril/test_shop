@@ -4,7 +4,7 @@ from userlogin.views import (
     logout, 
     login_form, 
     registration
-)
+)   
 
 urlpatterns = [
     url(r'login_form/$', login_form, name='login_form'),

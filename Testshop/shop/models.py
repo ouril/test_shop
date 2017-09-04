@@ -7,9 +7,8 @@ import uuid
 
 
 def make_upload_path(instance, filename, prefix=False):
-    '''
-    Create unque name for Image
-    '''
+    '''Create unque name for Image'''
+    
     new_name = str(uuid.uuid1())
     parts = filename.split('.')
     index = parts[-1]

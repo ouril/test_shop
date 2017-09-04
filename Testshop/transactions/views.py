@@ -13,12 +13,9 @@ from shop.models import (
 
 
 def buy(request, pk):
+    """Function for making order and balance changes
+       Use transactions
     """
-    Function for making order and balance changes
-    Use transactions
-
-    """
-
     store = Store.objects.get(id=pk)
     price = store.product.price
     print(store.number)
