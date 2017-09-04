@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.contrib import auth
+
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Product
-from django.contrib import auth
+
 # Create your views here.
 
 class ProductListView(ListView):

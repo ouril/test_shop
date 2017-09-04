@@ -1,14 +1,16 @@
-from testshop.models import BaseModel
+import uuid
+
 from django.db import models
 from testshop import settings
 from django.contrib.auth.models import User
-import uuid
+
+from testshop.models import BaseModel
 
 
 
 def make_upload_path(instance, filename, prefix=False):
     '''Create unque name for Image'''
-    
+        
     new_name = str(uuid.uuid1())
     parts = filename.split('.')
     index = parts[-1]
@@ -19,7 +21,7 @@ class Product(BaseModel):
     name = models.CharField(
         max_length=191, 
         verbose_name='Product',
-        unque=True
+        unique=True
         )
     about = models.TextField() 
     price = models.DecimalField(
@@ -51,4 +53,5 @@ class Order(BaseModel):
 
     def __str__(self):
         return ('Order for ' + str(self.user) + ': ' + str(self.product) +
-                     ' ' + str(self.created.date()))
+                ' ' + str(self.created.date())
+               )

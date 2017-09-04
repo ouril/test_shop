@@ -1,7 +1,7 @@
 from django.db import models
-from testshop.models import BaseModel
 from django.contrib.auth.models import User
 
+from testshop.models import BaseModel
 
 # Create your models here.
 
@@ -39,4 +39,5 @@ class UserBalanceChange(models.Model):
 
     def __str__(self):
         return ("Списание со счета " + self.user.username  + " " 
-                    + str(self.datetime.date()) + str(self.datetime.time()))
+                + str(self.datetime.date()) + str(self.datetime.time())
+        )

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block main %}
+<form method="post" role="form" action="{% url 'registration' %}">
 {% csrf_token %}
 <table>
     <span class="hidden" id="userid">{{ id }}</span>
@@ -19,6 +20,9 @@
                 </div>
             </td>
         </tr>
+
     {% endfor %}
 </table>
+    <input type="submit" value="Create the account">
+</form>
 {% endblock %}
